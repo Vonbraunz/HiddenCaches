@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Logging;
@@ -8,7 +8,7 @@ using EFT.Interactive;
 
 namespace RaiRai.HiddenCaches
 {
-    [BepInPlugin("com.rairai.hiddencaches.eft", "HiddenCaches", "1.2.0")]
+    [BepInPlugin("com.rairai.hiddencaches.eft", "HiddenCaches", "1.3.0")]
     public class Plugin : BaseUnityPlugin
     {
         internal static ManualLogSource Log;
@@ -38,9 +38,9 @@ namespace RaiRai.HiddenCaches
 
         private void InitConfig()
         {
-            configAudio = Config.Bind("", "Audio", enabled, new ConfigDescription("", null, new ConfigurationManagerAttributes { Order = 4 }));
-            configLight = Config.Bind("", "Light", enabled, new ConfigDescription("", null, new ConfigurationManagerAttributes { Order = 3 }));
-            configSmoke = Config.Bind("", "Smoke", enabled, new ConfigDescription("", null, new ConfigurationManagerAttributes { Order = 2 }));
+            configAudio = Config.Bind("", "Audio", true, new ConfigDescription("", null, new ConfigurationManagerAttributes { Order = 4 }));
+            configLight = Config.Bind("", "Light", true, new ConfigDescription("", null, new ConfigurationManagerAttributes { Order = 3 }));
+            configSmoke = Config.Bind("", "Smoke", true, new ConfigDescription("", null, new ConfigurationManagerAttributes { Order = 2 }));
             configColor = Config.Bind("Color", "", new Color(1.0f, 0.75f / 2, 0.0f), new ConfigDescription("", null, new ConfigurationManagerAttributes { Order = 1 }));
             
             Config.Bind("Color", "Apply", "", new ConfigDescription("", null, new ConfigurationManagerAttributes { Order = 0, HideDefaultButton = true, CustomDrawer = new Action<ConfigEntryBase>(ApplyDrawer) }));
