@@ -1,4 +1,5 @@
-﻿using Comfort.Common;
+using Comfort.Common;
+using EFT.AssetsManager;
 using System;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -23,9 +24,14 @@ namespace RaiRai.HiddenCaches
         {
             var PATH = "assets/content/location_objects/lootable/prefab/scontainer_crate.bundle";
 
+            // Confirmed via PoolManagerClass decompile:
+            //   public readonly IEasyAssets EasyAssets;   (field on PoolManagerClass)
+            //   public PoolManagerClass(IEasyAssets easyAssets, ...) { this.EasyAssets = easyAssets; }
+            // PoolManagerClass is the registered Singleton - IEasyAssets is just the interface it holds.
+            // Retain() and GetAsset() are extension methods on IEasyAssets, defined in EFT.AssetsManager.
             var easyAssets = Singleton<PoolManagerClass>.Instance.EasyAssets;
-            await easyAssets.Retain(PATH, null, null).LoadingJob;
 
+            await easyAssets.Retain(PATH, null, null).LoadingJob;
 
             try
             {
@@ -55,11 +61,10 @@ namespace RaiRai.HiddenCaches
             }
             catch (Exception ex)
             {
-                Plugin.Log.LogError(ex);
+                Plugin.Log.LogError($"[HiddenCaches] BundleLoader failed to extract components: {ex}");
             }
 
             return Tuple.Create(audioClip, material, particleSystem);
-
         }
     }
 }
